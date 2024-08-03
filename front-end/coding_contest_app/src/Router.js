@@ -1,5 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Login from "./host/components/Login/login";
+import Signup from "./host/components/Signup/signup";
 import HostDashboard from "./host/pages/Dashboard";
 import ContestCreation from "./host/pages/ContestCreation";
 import LeaderboardPage from "./host/pages/LeaderboardPage";
@@ -11,6 +13,8 @@ function ApplicationRouter() {
   return (
     <Router>
       <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
         <Route path="/" element={<HostDashboard />} />
         <Route path="/leaderboard" element={<LeaderboardPage />} />
         <Route path="/host" element={<ContestCreation />} />

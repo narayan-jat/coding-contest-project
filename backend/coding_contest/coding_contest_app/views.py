@@ -5,6 +5,15 @@ from rest_framework.parsers import MultiPartParser, FormParser
 from .models import Contests
 from .serializers import ContestsSerializer
 from datetime import datetime
+# Shravan's changes
+from django.http import JsonResponse
+from django.contrib.auth import get_user_model, authenticate, login
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework import status
+from rest_framework.authtoken.models import Token
+import requests
+
 
 DRIVE_FOLDERS = {}
 
@@ -41,3 +50,40 @@ class ContestDetailsView(APIView):
 
     def handle_method_not_allowed(self, request, *args, **kwargs):
         return Response({'error': 'Only GET method is allowed'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
+
+
+
+@api_view(['POST'])
+def google_signup(request):
+    data = request.data
+    token = data.get('token')
+
+    # Verify the token with Google
+    response = requests.get(f'https://www.googleapis.com/oauth2/v3/tokeninfo?id_token={token}')
+    user_info = response.json()
+
+    if response.status_code == 200:
+        email = user_info.get('email')
+        User = get_user_model()
+        user, created = User.objects.get_or_create(email=email)
+        
+        if created:
+            user.set_unusable_password()  # Google sign-in users won't have a password
+            user.save()
+
+        # Authenticate and login the user
+        user = authenticate(request, username=email)
+        if user is not None:
+            login(request, user)
+            
+            # Generate or get an existing token for the user
+            token, created = Token.objects.get_or_create(user=user)
+            
+            return JsonResponse({
+                'message': 'User created or logged in successfully',
+                'token': token.key
+            })
+        else:
+            return JsonResponse({'error': 'Authentication failed'}, status=status.HTTP_401_UNAUTHORIZED)
+    else:
+        return JsonResponse({'error': 'Invalid token'}, status=status.HTTP_400_BAD_REQUEST)
