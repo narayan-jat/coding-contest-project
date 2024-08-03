@@ -1,0 +1,66 @@
+@import "../../index.css";
+
+
+.contest-details {
+    background-color: black;
+    width: 100%;
+    margin: 50px auto;
+
+}
+
+.contest-details-images {
+    width: 75%;
+    margin: 50px auto;
+}
+
+.image1 {
+    width: 100%;
+    height: 35vh;
+    border-radius: 10px;
+}
+.image2 {
+    width: 150px;
+    height: 150px;
+    border-radius: 2px;
+}
+.image1-div {
+    width: 100%;
+    margin: 0px auto;
+    padding-top: 50px;
+    padding-bottom: 25px;
+}
+
+.image2-div {
+    position: absolute;
+    top: 35vh;
+    left: 18%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Adds a shadow */
+}
+.contest-details-metadata {
+    display: flex;
+    justify-content: space-between;
+    width: 75%;
+    margin: 0px auto;
+}
+
+.contest-details-metadata-right  {
+    padding-right: 25px;
+}
+.deadline-heading {
+ display: none;   
+}
+
+@media (max-width: 768px){
+    .contest-details-metadata {
+        display: flex;
+        flex-direction: column;
+        width: 75%;
+    }
+    .deadline-heading {
+        display: block;
+        padding-top: 20px;
+    }
+    .contest-details-metadata-right {
+        padding-left: 10px;
+    }
+}

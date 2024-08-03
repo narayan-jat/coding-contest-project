@@ -8,10 +8,9 @@ import { toast } from "react-toastify";
 import moment from "moment";
 import LoadingOverlay from "react-loading-overlay-ts";
 import PulseLoader from "react-spinners/PulseLoader";
-import "./ContestDetails.css";
-import { backdropClasses } from "@mui/material";
+import "./ContestRegistration.css";
 
-const ContestDetails = () => {
+const ContestRegistration = () => {
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     contestName: "",
@@ -333,4 +332,4 @@ const ContestDetails = () => {
   );
 };
 
-export default ContestDetails;
+export default ContestRegistration;
